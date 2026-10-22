@@ -275,20 +275,36 @@ class _TranslationPageState extends State<TranslationPage> {
       ),
       const SizedBox(height: 20),
       if (translating || reading) const LinearProgressIndicator(),
-      Card(
+      Container(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xff173a4a), Color(0xff0c6c59)],
+          ),
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x1714745f),
+              blurRadius: 22,
+              offset: Offset(0, 10),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.all(22),
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.zero,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Row(
                 children: [
-                  Icon(Icons.translate_rounded, color: teal),
+                  Icon(Icons.translate_rounded, color: Color(0xffa6f0d3)),
                   SizedBox(width: 10),
                   Text(
                     'BẢN DỊCH',
                     style: TextStyle(
-                      color: teal,
+                      color: Color(0xffa6f0d3),
                       fontWeight: FontWeight.w700,
                       letterSpacing: 1,
                     ),
@@ -301,7 +317,7 @@ class _TranslationPageState extends State<TranslationPage> {
                 style: TextStyle(
                   fontSize: 18,
                   height: 1.6,
-                  color: output.isEmpty ? Colors.black38 : navy,
+                  color: output.isEmpty ? Color(0xffc5d9d3) : Colors.white,
                 ),
               ),
             ],

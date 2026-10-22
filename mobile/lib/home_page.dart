@@ -560,9 +560,14 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Container(
+          clipBehavior: Clip.antiAlias,
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: navy,
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Color(0xff173a4a), Color(0xff0c6c59)],
+            ),
             borderRadius: BorderRadius.circular(24),
           ),
           child: Column(
@@ -976,9 +981,25 @@ class _HomePageState extends State<HomePage> {
     ];
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 68,
+        leadingWidth: 56,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 12, top: 9, bottom: 9),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xff16836b), Color(0xff0d5e50)],
+              ),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: const Icon(Icons.school_rounded, color: Colors.white),
+          ),
+        ),
         title: const Text(
           'Attendly',
-          style: TextStyle(fontWeight: FontWeight.w800, letterSpacing: -.5),
+          style: TextStyle(fontWeight: FontWeight.w800, letterSpacing: -.6),
         ),
         actions: [
           IconButton(
@@ -1035,7 +1056,7 @@ class _HomePageState extends State<HomePage> {
                       onRefresh: reload,
                       child: ListView(
                         physics: const AlwaysScrollableScrollPhysics(),
-                        padding: const EdgeInsets.fromLTRB(20, 4, 20, 30),
+                        padding: const EdgeInsets.fromLTRB(18, 7, 18, 30),
                         children: [
                           if (tab == 0)
                             dashboard()

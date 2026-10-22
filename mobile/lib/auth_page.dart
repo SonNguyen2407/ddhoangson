@@ -96,180 +96,209 @@ class _AuthPageState extends State<AuthPage> {
             child: AutofillGroup(
               child: Form(
                 key: form,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: teal,
-                          borderRadius: BorderRadius.circular(22),
-                        ),
-                        child: const Icon(
-                          Icons.school_rounded,
-                          size: 36,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 28),
-                    const Text(
-                      'ATTENDLY',
-                      style: TextStyle(
-                        color: teal,
-                        fontSize: 13,
-                        letterSpacing: 3,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      challenge != null
-                          ? deliveryMode == 'pickup'
-                                ? 'OTP của bản thử nghiệm'
-                                : 'Kiểm tra hộp thư'
-                          : register
-                          ? 'Bắt đầu hành trình'
-                          : 'Chào mừng trở lại',
-                      style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w800,
-                        color: navy,
-                        height: 1.15,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      challenge != null
-                          ? deliveryMessage ?? 'Nhập mã OTP gồm 6 số đã gửi đến email của bạn. Mã có hiệu lực trong 5 phút.'
-                          : register
-                          ? 'Đăng ký bằng email để tham gia lớp học và điểm danh.'
-                          : 'Đăng nhập để kết nối với lớp học của bạn.',
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        height: 1.6,
-                      ),
-                    ),
-                    const SizedBox(height: 32),
-                    if (challenge != null)
-                      TextFormField(
-                        controller: otp,
-                        enabled: !busy,
-                        keyboardType: TextInputType.number,
-                        maxLength: 6,
-                        autofillHints: const [AutofillHints.oneTimeCode],
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        decoration: const InputDecoration(
-                          labelText: 'Mã OTP',
-                          prefixIcon: Icon(Icons.mark_email_read_outlined),
-                        ),
-                        validator: (v) =>
-                            v?.length == 6 ? null : 'Nhập đủ 6 chữ số',
-                        onFieldSubmitted: (_) => busy ? null : submit(),
-                      )
-                    else ...[
-                      if (register) ...[
-                        field(name, 'Họ và tên'),
-                        field(
-                          email,
-                          'Email',
-                          keyboard: TextInputType.emailAddress,
-                        ),
-                      ],
-                      field(username, 'Tên đăng nhập'),
-                      TextFormField(
-                        controller: password,
-                        enabled: !busy,
-                        obscureText: !visible,
-                        decoration: InputDecoration(
-                          labelText: 'Mật khẩu',
-                          helperText: register
-                              ? '10–128 ký tự, có chữ hoa, chữ thường và số'
-                              : null,
-                          suffixIcon: IconButton(
-                            onPressed: () => setState(() => visible = !visible),
-                            icon: Icon(
-                              visible
-                                  ? Icons.visibility_off_outlined
-                                  : Icons.visibility_outlined,
-                            ),
-                          ),
-                        ),
-                        validator: (v) => v == null || v.isEmpty
-                            ? 'Vui lòng nhập mật khẩu'
-                            : null,
-                        onFieldSubmitted: (_) => busy ? null : submit(),
+                child: Container(
+                  padding: const EdgeInsets.all(22),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(28),
+                    border: Border.all(color: const Color(0xffe5eee9)),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color(0x1018342f),
+                        blurRadius: 32,
+                        offset: Offset(0, 14),
                       ),
                     ],
-                    if (error != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16),
-                        child: Text(
-                          error!,
-                          style: const TextStyle(color: Color(0xffa82d3a)),
-                        ),
-                      ),
-                    const SizedBox(height: 24),
-                    FilledButton(
-                      onPressed: busy ? null : submit,
-                      child: busy
-                          ? const SizedBox(
-                              height: 22,
-                              width: 22,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : Text(
-                              challenge != null
-                                  ? 'Xác thực và tiếp tục'
-                                  : register
-                                  ? 'Tạo tài khoản'
-                                  : 'Đăng nhập',
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [Color(0xff16836b), Color(0xff0d5e50)],
                             ),
-                    ),
-                    const SizedBox(height: 12),
-                    TextButton(
-                      onPressed: busy
-                          ? null
-                          : () => setState(() {
-                              if (challenge == null) register = !register;
-                              challenge = null;
-                              deliveryMessage = null;
-                              deliveryMode = 'smtp';
-                              error = null;
-                              otp.clear();
-                            }),
-                      child: Text(
-                        challenge != null
-                            ? 'Quay lại để gửi mã mới'
-                            : register
-                            ? 'Đã có tài khoản? Đăng nhập'
-                            : 'Chưa có tài khoản? Đăng ký',
-                      ),
-                    ),
-                    const SizedBox(height: 24),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.verified_user_outlined,
-                          size: 16,
-                          color: teal,
-                        ),
-                        SizedBox(width: 8),
-                        Flexible(
-                          child: Text(
-                            'Giáo viên đăng nhập bằng mật khẩu; sinh viên và quản trị viên xác thực OTP qua email.',
-                            style: TextStyle(color: Colors.black54),
-                            textAlign: TextAlign.center,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: teal.withValues(alpha: .2),
+                                blurRadius: 24,
+                                offset: const Offset(0, 10),
+                              ),
+                            ],
+                          ),
+                          child: const Icon(
+                            Icons.school_rounded,
+                            size: 36,
+                            color: Colors.white,
                           ),
                         ),
+                      ),
+                      const SizedBox(height: 28),
+                      const Text(
+                        'ATTENDLY',
+                        style: TextStyle(
+                          color: teal,
+                          fontSize: 13,
+                          letterSpacing: 3,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        challenge != null
+                            ? deliveryMode == 'pickup'
+                                  ? 'OTP của bản thử nghiệm'
+                                  : 'Kiểm tra hộp thư'
+                            : register
+                            ? 'Bắt đầu hành trình'
+                            : 'Chào mừng trở lại',
+                        style: const TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w800,
+                          color: navy,
+                          height: 1.15,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        challenge != null
+                            ? deliveryMessage ?? 'Nhập mã OTP gồm 6 số đã gửi đến email của bạn. Mã có hiệu lực trong 5 phút.'
+                            : register
+                            ? 'Đăng ký bằng email để tham gia lớp học và điểm danh.'
+                            : 'Đăng nhập để kết nối với lớp học của bạn.',
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          height: 1.6,
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      if (challenge != null)
+                        TextFormField(
+                          controller: otp,
+                          enabled: !busy,
+                          keyboardType: TextInputType.number,
+                          maxLength: 6,
+                          autofillHints: const [AutofillHints.oneTimeCode],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
+                          decoration: const InputDecoration(
+                            labelText: 'Mã OTP',
+                            prefixIcon: Icon(Icons.mark_email_read_outlined),
+                          ),
+                          validator: (v) =>
+                              v?.length == 6 ? null : 'Nhập đủ 6 chữ số',
+                          onFieldSubmitted: (_) => busy ? null : submit(),
+                        )
+                      else ...[
+                        if (register) ...[
+                          field(name, 'Họ và tên'),
+                          field(
+                            email,
+                            'Email',
+                            keyboard: TextInputType.emailAddress,
+                          ),
+                        ],
+                        field(username, 'Tên đăng nhập'),
+                        TextFormField(
+                          controller: password,
+                          enabled: !busy,
+                          obscureText: !visible,
+                          decoration: InputDecoration(
+                            labelText: 'Mật khẩu',
+                            helperText: register
+                                ? '10–128 ký tự, có chữ hoa, chữ thường và số'
+                                : null,
+                            suffixIcon: IconButton(
+                              onPressed: () =>
+                                  setState(() => visible = !visible),
+                              icon: Icon(
+                                visible
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                              ),
+                            ),
+                          ),
+                          validator: (v) => v == null || v.isEmpty
+                              ? 'Vui lòng nhập mật khẩu'
+                              : null,
+                          onFieldSubmitted: (_) => busy ? null : submit(),
+                        ),
                       ],
-                    ),
-                  ],
+                      if (error != null)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Text(
+                            error!,
+                            style: const TextStyle(color: Color(0xffa82d3a)),
+                          ),
+                        ),
+                      const SizedBox(height: 24),
+                      FilledButton(
+                        onPressed: busy ? null : submit,
+                        child: busy
+                            ? const SizedBox(
+                                height: 22,
+                                width: 22,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : Text(
+                                challenge != null
+                                    ? 'Xác thực và tiếp tục'
+                                    : register
+                                    ? 'Tạo tài khoản'
+                                    : 'Đăng nhập',
+                              ),
+                      ),
+                      const SizedBox(height: 12),
+                      TextButton(
+                        onPressed: busy
+                            ? null
+                            : () => setState(() {
+                                if (challenge == null) register = !register;
+                                challenge = null;
+                                deliveryMessage = null;
+                                deliveryMode = 'smtp';
+                                error = null;
+                                otp.clear();
+                              }),
+                        child: Text(
+                          challenge != null
+                              ? 'Quay lại để gửi mã mới'
+                              : register
+                              ? 'Đã có tài khoản? Đăng nhập'
+                              : 'Chưa có tài khoản? Đăng ký',
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.verified_user_outlined,
+                            size: 16,
+                            color: teal,
+                          ),
+                          SizedBox(width: 8),
+                          Flexible(
+                            child: Text(
+                              'Giáo viên đăng nhập bằng mật khẩu; sinh viên và quản trị viên xác thực OTP qua email.',
+                              style: TextStyle(color: Colors.black54),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -7,7 +7,20 @@ allprojects {
     }
 }
 
-// Register a clean task that deletes the project's build directory.
+val newBuildDir: Directory =
+    rootProject.layout.buildDirectory
+        .dir("../../build")
+        .get()
+rootProject.layout.buildDirectory.value(newBuildDir)
+
+subprojects {
+    val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
+    project.layout.buildDirectory.value(newSubprojectBuildDir)
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
 tasks.register<Delete>("clean") {
-    delete(layout.buildDirectory)
+    delete(rootProject.layout.buildDirectory)
 }

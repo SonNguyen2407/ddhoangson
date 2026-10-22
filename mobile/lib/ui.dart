@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'api.dart';
 
-const navy = Color(0xff162c47);
-const teal = Color(0xff087e8b);
+const navy = Color(0xff18342f);
+const teal = Color(0xff14745f);
 const roleLabels = {
   'admin': 'Quản trị viên',
   'teacher': 'Giáo viên',
@@ -46,21 +46,37 @@ class EmptyState extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
+    padding: const EdgeInsets.symmetric(vertical: 38, horizontal: 24),
     child: Column(
       children: [
-        Icon(icon, size: 52, color: teal),
-        const SizedBox(height: 18),
+        Container(
+          width: 76,
+          height: 76,
+          decoration: BoxDecoration(
+            color: const Color(0xffe4f4ec),
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Icon(icon, size: 34, color: teal),
+        ),
+        const SizedBox(height: 20),
         Text(
           title,
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            color: navy,
+            fontWeight: FontWeight.w800,
+            letterSpacing: -.35,
+          ),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 9),
         Text(
           message,
           textAlign: TextAlign.center,
-          style: const TextStyle(color: Colors.black54, height: 1.5),
+          style: const TextStyle(
+            color: Color(0xff73827c),
+            height: 1.6,
+            fontSize: 14,
+          ),
         ),
         if (action != null)
           Padding(padding: const EdgeInsets.only(top: 20), child: action),
@@ -75,14 +91,27 @@ class SectionTitle extends StatelessWidget {
   const SectionTitle(this.title, {this.action, super.key});
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: 12),
+    padding: const EdgeInsets.only(top: 17, bottom: 13),
     child: Row(
       children: [
+        Container(
+          width: 4,
+          height: 24,
+          decoration: BoxDecoration(
+            color: teal,
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ),
+        const SizedBox(width: 10),
         Expanded(
           child: Text(
             title,
-            style: Theme.of(context).textTheme.titleLarge
-                ?.copyWith(fontWeight: FontWeight.w700),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: navy,
+              fontSize: 19,
+              fontWeight: FontWeight.w800,
+              letterSpacing: -.35,
+            ),
           ),
         ),
         ?action,
