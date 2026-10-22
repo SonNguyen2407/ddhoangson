@@ -43,9 +43,9 @@ sequenceDiagram
     participant M as Email
     A->>S: Username + mật khẩu (hoặc đăng ký email)
     S->>S: Kiểm tra mật khẩu và trạng thái tài khoản
-    alt Đăng nhập giáo viên đã xác thực email
+    alt Đăng nhập giáo viên hoặc admin đã xác thực email
         S-->>A: Token + người dùng + vai trò
-    else Sinh viên, admin hoặc xác thực email đăng ký
+    else Sinh viên hoặc xác thực email đăng ký
         S->>M: Gửi OTP 6 số
         S-->>A: Challenge ID, hạn dùng
         A->>S: Challenge ID + OTP

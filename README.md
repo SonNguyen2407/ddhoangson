@@ -6,7 +6,7 @@
 
 | Nhóm | Đã triển khai |
 |---|---|
-| Tài khoản | Đăng ký email, xác thực email bằng OTP; giáo viên đã xác thực đăng nhập bằng tên đăng nhập + mật khẩu; sinh viên và admin thêm bước OTP email; đăng xuất và thu hồi phiên |
+| Tài khoản | Đăng ký email, xác thực email bằng OTP; giáo viên và admin đã xác thực đăng nhập bằng tên đăng nhập + mật khẩu; sinh viên thêm bước OTP email; đăng xuất và thu hồi phiên |
 | Phân quyền | Admin quản lý toàn hệ thống; giáo viên chỉ quản lý lớp phụ trách; sinh viên chỉ xem lớp của mình và lịch sử cá nhân |
 | CRUD | Tài khoản, lớp học, buổi học, bản ghi điểm danh; thêm/xóa sinh viên khỏi lớp; nhật ký thay đổi |
 | Điểm danh | GPS + QR có hạn tối đa 60 giây, GPS + sinh trắc học thiết bị, hoặc GPS + UID NFC đã gắn với lớp |
@@ -95,9 +95,9 @@ APK: `mobile/build/app/outputs/flutter-apk/app-debug.apk`. Đây là bản debug
 
 ## Kịch bản sử dụng
 
-Giáo viên đã xác thực email đăng nhập bằng mật khẩu và được đưa thẳng tới dashboard, không cần OTP mỗi lần đăng nhập. Sinh viên và quản trị viên vẫn xác thực OTP. Đăng ký mới vẫn cần xác thực email và không được tự chọn quyền giáo viên.
+Giáo viên và quản trị viên đã xác thực đăng nhập bằng mật khẩu và được đưa thẳng tới dashboard, không cần OTP mỗi lần đăng nhập. Sinh viên vẫn xác thực OTP. Đăng ký mới vẫn cần xác thực email và không được tự chọn quyền giáo viên.
 
-1. Đăng nhập `admin`, lấy OTP trong email và tạo tài khoản giáo viên.
+1. Đăng nhập `admin` bằng mật khẩu và tạo tài khoản giáo viên.
 2. Sinh viên tự đăng ký, xác thực email; admin cũng có thể cấp tài khoản sinh viên.
 3. Admin hoặc giáo viên tạo lớp và thêm sinh viên đã xác thực vào danh sách lớp.
 4. Giáo viên mở buổi học, chọn giờ bắt đầu/kết thúc, vị trí lớp và bán kính 10–500 m.

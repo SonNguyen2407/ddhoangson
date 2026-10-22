@@ -290,7 +290,7 @@ class _AuthPageState extends State<AuthPage> {
                           SizedBox(width: 8),
                           Flexible(
                             child: Text(
-                              'Giáo viên đăng nhập bằng mật khẩu; sinh viên và quản trị viên xác thực OTP qua email.',
+                              'Giáo viên và quản trị viên đăng nhập bằng mật khẩu; sinh viên xác thực OTP qua email.',
                               style: TextStyle(color: Colors.black54),
                               textAlign: TextAlign.center,
                             ),

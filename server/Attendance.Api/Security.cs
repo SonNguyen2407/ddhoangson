@@ -133,7 +133,7 @@ public static class AuthEndpoints
             user.FailedLogins = 0;
             user.LockedUntil = null;
             await db.SaveChangesAsync();
-            if (user.Role == "teacher" && user.Verified)
+            if ((user.Role is "teacher" or "admin") && user.Verified)
             {
                 var session = CreateSession(user, db);
                 await db.SaveChangesAsync();
